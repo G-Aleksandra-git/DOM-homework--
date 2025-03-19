@@ -8,11 +8,11 @@
 
   <body>
     <div class="container">
-      <ul class="comments">
+      <ul id="comments-list" class="comments">
         <li class="comment">
           <div class="comment-header">
-            <div>Александра</div>
-            <div>10.03.2025</div>
+            <div>Глеб Фокин</div>
+            <div>10.02.2022</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
@@ -45,19 +45,19 @@
         </li>
       </ul>
       <div class="add-form">
-        <input
+        <input id="name"
           type="text"
           class="add-form-name"
           placeholder="Введите ваше имя"
         />
-        <textarea
+        <textarea id="text-comment"
           type="textarea"
           class="add-form-text"
           placeholder="Введите ваш коментарий"
           rows="4"
         ></textarea>
         <div class="add-form-row">
-          <button class="add-form-button">Написать</button>
+          <button id="to-write" class="add-form-button">Написать</button>
         </div>
       </div>
     </div>
@@ -65,7 +65,57 @@
 
   <script>
     "use strict";
-    // Код писать здесь
+    // Обработчик для изменения поля "Имя"
+    document.getElementById("name").addEventListener("input", function () {
+      console.log("Изменено имя: ", this.value);
+    });
+
+    // Обработчик для изменения поля "Комментарий"
+    document.getElementById("text-comment").addEventListener("input", function () {
+      console.log("Изменен комментарий: ", this.value);
+    });
+    
+
+      // Обработчик для кнопки "Написать"
+    document.getElementById("to-write").addEventListener("click", function () {
+      const name = document.getElementById("name").value;
+      const commentText = document.getElementById("text-comment").value;
+
+      // Проверяем, что поля не пустые
+      if (name.trim() === "" || commentText.trim() === "") {
+        alert("Пожалуйста, заполните оба поля.");
+      } else {
+        // Создаем новый комментарий с помощью шаблонной строки
+        const newComment = `
+          <li class="comment">
+            <div class="comment-header">
+              <div>${name}</div>
+              <div>${new Date().toLocaleString()}</div>
+            </div>
+            <div class="comment-body">
+              <div class="comment-text">
+                ${commentText}
+              </div>
+            </div>
+            <div class="comment-footer">
+              <div class="likes">
+                <span class="likes-counter">0</span>
+                <button class="like-button"></button>
+              </div>
+            </div>
+          </li>
+        `;
+
+        // Добавляем новый комментарий в список
+        document.getElementById("comments-list").innerHTML += newComment;
+
+        // Очищаем поля ввода
+        document.getElementById("name").value = "";
+        document.getElementById("text-comment").value = "";
+      }
+    });
+
     console.log("It works!");
+
   </script>
 </html>
